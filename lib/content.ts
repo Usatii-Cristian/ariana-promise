@@ -103,6 +103,8 @@ export type Content = {
     signature: string;
     /** Butonul care resetează experiența. */
     restart: string;
+    /** Legenda de sub poza-glumă de la finalul scrisorii ("P.S."). */
+    psCaption: string;
   };
 
   /** Buton de sunet ambiental (comută un pad discret generat în browser). */
@@ -277,6 +279,7 @@ export const content: Content = {
     ],
     signature: "Al tău luceafăr, rămas lângă tine pentru totdeauna 🌙❤️",
     restart: "Revezi cerul",
+    psCaption: "P.S. — se pare că aveai deja un „inel” de mult 😂",
   },
 
   audio: {

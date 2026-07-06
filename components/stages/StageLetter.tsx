@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { content } from "@/lib/content";
 import { TapSparkleField } from "@/components/effects/TapSparkleField";
 
@@ -77,6 +78,29 @@ export function StageLetter({ onRestart, onOpenBonus }: StageLetterProps) {
           >
             {content.bonusGame.cta}
           </button>
+        </motion.div>
+
+        {/* P.S. — o poză-glumă, ca un mic bilet găsit la finalul scrisorii. */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 1.4 + paragraphs.length * 0.25 }}
+          className="mt-16 flex flex-col items-center self-center"
+        >
+          <div className="w-48 -rotate-2 rounded-lg bg-white p-2 shadow-lg sm:w-56">
+            <div className="relative aspect-[3/4] overflow-hidden rounded">
+              <Image
+                src="/inel-haios.jpg"
+                alt="Ariana râzând, arătând jucăuș un «inel» cu mult înainte de cel adevărat"
+                fill
+                sizes="(max-width: 640px) 12rem, 14rem"
+                className="object-cover"
+              />
+            </div>
+            <p className="mt-2 text-center font-serif text-xs italic text-night-900/70">
+              {content.letter.psCaption}
+            </p>
+          </div>
         </motion.div>
       </TapSparkleField>
     </motion.div>
