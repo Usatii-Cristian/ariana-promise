@@ -81,6 +81,16 @@ export type Content = {
     counterLabel: string;
     /** Mesajul central de "promise". */
     promise: string;
+    /**
+     * Momentul-cheie: ea atinge inelul de pe ecran — semnalul perfect ca tu
+     * să-i dai inelul real chiar atunci, în persoană.
+     */
+    physicalCue: {
+      /** Îndemnul discret, pulsant, de sub inel. */
+      prompt: string;
+      /** Mesajul care apare după ce atinge inelul. */
+      message: string;
+    };
   };
 
   /** ETAPA 6 — scrisoarea finală. */
@@ -219,6 +229,10 @@ export const content: Content = {
     counterLabel: "Împreună de",
     promise:
       "Luceafărul a ales cerul și a rămas singur. Eu te aleg pe tine — și-ți promit că, oricâte stele vom mai număra, cobor din cer în fiecare noapte pentru tine.",
+    physicalCue: {
+      prompt: "Atinge inelul",
+      message: "Acesta e doar semnul. Cel adevărat e chiar acum lângă tine.",
+    },
   },
 
   letter: {

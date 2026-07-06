@@ -19,7 +19,7 @@ import { MomentCard } from "./MomentCard";
 import { LockPanel } from "./LockPanel";
 import { SparkBurst } from "./SparkBurst";
 import { RevealPanel } from "./RevealPanel";
-import { StarTapBurst } from "./StarTapBurst";
+import { MiniSparkBurst } from "@/components/effects/MiniSparkBurst";
 
 /** Cât timp (ms) rămâne montat un izbucnet de scântei după atingerea unei stele. */
 const TAP_BURST_MS = 650;
@@ -207,7 +207,7 @@ export function Sky({
 
       {/* Scântei la fiecare atingere de stea. */}
       {bursts.map((b) => (
-        <StarTapBurst key={b.id} point={b.point} />
+        <MiniSparkBurst key={b.id} point={b.point} />
       ))}
 
       {/* Cărticica momentului activ. */}

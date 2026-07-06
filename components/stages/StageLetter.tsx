@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { content } from "@/lib/content";
+import { TapSparkleField } from "@/components/effects/TapSparkleField";
 
 type StageLetterProps = {
   onRestart: () => void;
@@ -23,7 +24,7 @@ export function StageLetter({ onRestart, onOpenBonus }: StageLetterProps) {
           "radial-gradient(120% 120% at 50% 0%, #f6efe1 0%, #ece0c9 55%, #e3d3b6 100%)",
       }}
     >
-      <div className="mx-auto flex min-h-dvh max-w-xl flex-col justify-center px-7 py-16">
+      <TapSparkleField className="mx-auto flex min-h-dvh max-w-xl flex-col justify-center px-7 py-16">
         <motion.h2
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -77,7 +78,7 @@ export function StageLetter({ onRestart, onOpenBonus }: StageLetterProps) {
             {content.bonusGame.cta}
           </button>
         </motion.div>
-      </div>
+      </TapSparkleField>
     </motion.div>
   );
 }

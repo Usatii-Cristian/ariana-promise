@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { content } from "@/lib/content";
 import { Typewriter } from "@/components/Typewriter";
+import { TapSparkleField } from "@/components/effects/TapSparkleField";
 
 type StageAwakenProps = {
   onOpen: () => void;
@@ -28,7 +29,7 @@ export function StageAwaken({ onOpen }: StageAwakenProps) {
   }, [poem.length]);
 
   return (
-    <div className="flex min-h-dvh flex-col items-center justify-center px-6 text-center">
+    <TapSparkleField className="flex min-h-dvh flex-col items-center justify-center px-6 text-center">
       {/* Poemul — fiecare vers apare pe cer. */}
       <div className="max-w-md">
         {poem.map((line, i) =>
@@ -85,6 +86,6 @@ export function StageAwaken({ onOpen }: StageAwakenProps) {
         />
         {cta}
       </motion.button>
-    </div>
+    </TapSparkleField>
   );
 }
