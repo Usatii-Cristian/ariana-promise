@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useAnimationControls } from "framer-motion";
+import { AnimatePresence, motion, useAnimationControls } from "framer-motion";
 import { useState } from "react";
 import { content } from "@/lib/content";
 import { MAX_ATTEMPTS_BEFORE_SKIP } from "@/lib/useExperience";
@@ -16,19 +16,32 @@ function normalize(value: string): string {
   return value.trim().toLowerCase().replace(/\s+/g, " ");
 }
 
-/** ETAPA 4 — lacătul personal: o întrebare pe care doar ea o știe. */
+/**
+ * ETAPA 4 — lacătul personal: una sau mai multe întrebări pe care doar ea
+ * le știe, deblocate pe rând.
+ */
 export function LockPanel({ attempts, onWrong, onUnlock }: LockPanelProps) {
+  const { questions } = content.lock;
+  const [step, setStep] = useState(0);
   const [value, setValue] = useState("");
   const [wrongVisible, setWrongVisible] = useState(false);
   const controls = useAnimationControls();
 
-  const accepted = content.lock.answers.map(normalize);
+  const current = questions[step];
+  const accepted = current.answers.map(normalize);
+  const isLast = step === questions.length - 1;
   const canSkip = attempts >= MAX_ATTEMPTS_BEFORE_SKIP;
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     if (accepted.includes(normalize(value))) {
-      onUnlock();
+      if (isLast) {
+        onUnlock();
+      } else {
+        setStep((s) => s + 1);
+        setValue("");
+        setWrongVisible(false);
+      }
       return;
     }
     onWrong();
@@ -49,12 +62,28 @@ export function LockPanel({ attempts, onWrong, onUnlock }: LockPanelProps) {
       className="absolute inset-x-0 bottom-0 z-30 flex flex-col items-center px-6 pb-[max(2rem,env(safe-area-inset-bottom))]"
     >
       <div className="w-full max-w-sm rounded-2xl border border-gold-500/20 bg-night-800/80 p-5 backdrop-blur-md">
-        <h2 className="text-center font-serif text-xl leading-snug text-cream sm:text-2xl">
-          {content.lock.question}
-        </h2>
+        {questions.length > 1 && (
+          <p className="mb-2 text-center font-sans text-xs tabular-nums text-gold-500/70">
+            {step + 1}/{questions.length}
+          </p>
+        )}
+
+        <AnimatePresence mode="wait">
+          <motion.h2
+            key={step}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.3 }}
+            className="text-center font-serif text-xl leading-snug text-cream sm:text-2xl"
+          >
+            {current.question}
+          </motion.h2>
+        </AnimatePresence>
 
         <form onSubmit={submit} className="mt-4">
           <motion.input
+            key={step}
             animate={controls}
             type="text"
             value={value}
@@ -63,7 +92,7 @@ export function LockPanel({ attempts, onWrong, onUnlock }: LockPanelProps) {
               setWrongVisible(false);
             }}
             placeholder={content.lock.placeholder}
-            aria-label={content.lock.question}
+            aria-label={current.question}
             autoComplete="off"
             className="w-full rounded-full border border-gold-500/30 bg-night-900/60 px-5 py-3 text-center font-sans text-base text-cream placeholder:text-cream/35 focus:border-gold-500/70 focus:outline-none"
           />
@@ -84,7 +113,7 @@ export function LockPanel({ attempts, onWrong, onUnlock }: LockPanelProps) {
               animate={{ opacity: 1 }}
               className="font-sans text-sm text-gold-400/90"
             >
-              {content.lock.encouragement}
+              {current.encouragement}
             </motion.p>
           )}
         </div>

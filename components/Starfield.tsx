@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { prefersReducedMotion } from "@/lib/motionPrefs";
 
 type Star = {
   x: number; // fracție 0..1
@@ -57,9 +58,7 @@ export function Starfield() {
     resize();
     window.addEventListener("resize", resize);
 
-    const reduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+    const reduceMotion = prefersReducedMotion();
 
     let raf = 0;
     const render = (t: number) => {

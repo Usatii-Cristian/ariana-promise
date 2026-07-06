@@ -50,20 +50,26 @@ export type Content = {
    */
   moments: Moment[];
 
-  /** ETAPA 4 — lacătul personal. */
+  /** ETAPA 4 — lacătul personal: una sau mai multe întrebări, în ordine. */
   lock: {
-    /** Întrebarea la care doar ea știe răspunsul. */
-    question: string;
     /**
-     * Răspunsul corect. Verificarea ignoră majuscule/minuscule și spațiile
-     * de la capete. Poți pune mai multe variante acceptate.
+     * Întrebările la care doar ea știe răspunsul, în ordinea în care apar.
+     * Adaugă oricâte vrei — se deblochează una câte una.
      */
-    answers: string[];
+    questions: {
+      /** Întrebarea afișată. */
+      question: string;
+      /**
+       * Răspunsul corect. Verificarea ignoră majuscule/minuscule și spațiile
+       * de la capete. Poți pune mai multe variante acceptate.
+       */
+      answers: string[];
+      /** Mesajul cald când răspunsul e greșit (fără presiune). */
+      encouragement: string;
+    }[];
     /** Placeholder-ul din câmpul de text. */
     placeholder: string;
-    /** Mesajul cald când răspunsul e greșit (fără presiune). */
-    encouragement: string;
-    /** Butonul discret care apare după 3 încercări. */
+    /** Butonul discret care apare după prea multe încercări greșite. */
     skip: string;
   };
 
@@ -93,6 +99,22 @@ export type Content = {
   audio: {
     on: string;
     off: string;
+  };
+
+  /** Joc bonus, accesibil dintr-un buton pe scrisoarea finală. */
+  bonusGame: {
+    /** Butonul de pe scrisoare care deschide jocul. */
+    cta: string;
+    /** Instrucțiunea afișată sus, în timpul jocului. */
+    instructions: string;
+    /** Câte stele trebuie prinse ca să câștige. */
+    target: number;
+    /** Mesajul care apare după ce a prins toate stelele. */
+    successMessage: string;
+    /** Butonul de reîncepere a jocului. */
+    playAgain: string;
+    /** Butonul de închidere a jocului. */
+    close: string;
   };
 };
 
@@ -170,11 +192,24 @@ export const content: Content = {
   ],
 
   lock: {
-    question: "Cum îmi spui tu mie când nimeni nu aude?",
-    // Verificarea ignoră majusculele/spațiile; acceptăm și varianta fără diacritice.
-    answers: ["puta", "puța", "puță"],
+    // Adaugă oricâte întrebări vrei în acest array — se deblochează pe rând,
+    // în ordinea de mai jos. Exemplu pentru a doua întrebare (necomentează
+    // și completează cu răspunsul real când ești gata):
+    //
+    // {
+    //   question: "A doua întrebare a ta aici?",
+    //   answers: ["răspuns", "variantă fără diacritice"],
+    //   encouragement: "Mai încearcă, o știi tu.",
+    // },
+    questions: [
+      {
+        question: "Cum îmi spui tu mie când nimeni nu aude?",
+        // Verificarea ignoră majusculele/spațiile; acceptăm și varianta fără diacritice.
+        answers: ["puta", "puța", "puță"],
+        encouragement: "Mai încearcă, o știi tu.",
+      },
+    ],
     placeholder: "scrie aici…",
-    encouragement: "Mai încearcă, o știi tu.",
     skip: "Sari peste",
   },
 
@@ -201,5 +236,14 @@ export const content: Content = {
   audio: {
     on: "Pornește muzica",
     off: "Oprește muzica",
+  },
+
+  bonusGame: {
+    cta: "Un mic joc pentru tine ✦",
+    instructions: "Prinde stelele căzătoare",
+    target: 12,
+    successMessage: "Le-ai prins pe toate — exact cum m-ai prins și pe mine.",
+    playAgain: "Joacă din nou",
+    close: "Închide",
   },
 };

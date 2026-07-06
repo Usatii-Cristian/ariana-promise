@@ -5,10 +5,11 @@ import { content } from "@/lib/content";
 
 type StageLetterProps = {
   onRestart: () => void;
+  onOpenBonus: () => void;
 };
 
 /** ETAPA 6 — scrisoarea finală: fundal cald, tipografie serif, spațiere generoasă. */
-export function StageLetter({ onRestart }: StageLetterProps) {
+export function StageLetter({ onRestart, onOpenBonus }: StageLetterProps) {
   const { greeting, paragraphs, signature, restart } = content.letter;
 
   return (
@@ -55,16 +56,27 @@ export function StageLetter({ onRestart }: StageLetterProps) {
           {signature}
         </motion.p>
 
-        <motion.button
-          type="button"
-          onClick={onRestart}
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.8 + paragraphs.length * 0.25 }}
-          className="mt-14 self-start rounded-full border border-bordo/30 px-6 py-2.5 font-sans text-sm tracking-wide text-bordo transition-colors hover:bg-bordo/5"
+          className="mt-14 flex flex-wrap gap-3"
         >
-          {restart}
-        </motion.button>
+          <button
+            type="button"
+            onClick={onRestart}
+            className="rounded-full border border-bordo/30 px-6 py-2.5 font-sans text-sm tracking-wide text-bordo transition-colors hover:bg-bordo/5"
+          >
+            {restart}
+          </button>
+          <button
+            type="button"
+            onClick={onOpenBonus}
+            className="rounded-full bg-bordo/90 px-6 py-2.5 font-sans text-sm tracking-wide text-cream transition-colors hover:bg-bordo"
+          >
+            {content.bonusGame.cta}
+          </button>
+        </motion.div>
       </div>
     </motion.div>
   );

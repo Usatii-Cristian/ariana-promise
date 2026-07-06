@@ -6,9 +6,10 @@ import {
   useMotionValue,
   animate as animateValue,
 } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { content } from "@/lib/content";
 import { Stage } from "@/lib/types";
+import type { Point } from "@/lib/types";
 import { useMeasure } from "@/hooks/useMeasure";
 import { mapPositions, ringCenter, ringPositions } from "@/lib/geometry";
 import { Star } from "./Star";
@@ -18,6 +19,10 @@ import { MomentCard } from "./MomentCard";
 import { LockPanel } from "./LockPanel";
 import { SparkBurst } from "./SparkBurst";
 import { RevealPanel } from "./RevealPanel";
+import { StarTapBurst } from "./StarTapBurst";
+
+/** Cât timp (ms) rămâne montat un izbucnet de scântei după atingerea unei stele. */
+const TAP_BURST_MS = 650;
 
 type SkyProps = {
   stage: Stage;
@@ -67,6 +72,8 @@ export function Sky({
   const [activeMoment, setActiveMoment] = useState<number | null>(null);
   const [unlocking, setUnlocking] = useState(false);
   const [spinning, setSpinning] = useState(false);
+  const [bursts, setBursts] = useState<{ id: number; point: Point }[]>([]);
+  const nextBurstId = useRef(0);
   const rotate = useMotionValue(0);
 
   const total = content.moments.length;
@@ -129,6 +136,16 @@ export function Sky({
   const handleStarClick = (index: number) => {
     onTouchStar(index);
     setActiveMoment(index);
+
+    if (measured) {
+      const id = nextBurstId.current;
+      nextBurstId.current += 1;
+      const point = mapPositions(size)[index];
+      setBursts((prev) => [...prev, { id, point }]);
+      setTimeout(() => {
+        setBursts((prev) => prev.filter((b) => b.id !== id));
+      }, TAP_BURST_MS);
+    }
   };
 
   return (
@@ -187,6 +204,11 @@ export function Sky({
             </motion.div>
           )}
       </AnimatePresence>
+
+      {/* Scântei la fiecare atingere de stea. */}
+      {bursts.map((b) => (
+        <StarTapBurst key={b.id} point={b.point} />
+      ))}
 
       {/* Cărticica momentului activ. */}
       <AnimatePresence>

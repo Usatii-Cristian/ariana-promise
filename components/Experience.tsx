@@ -5,10 +5,13 @@ import { useState } from "react";
 import { Stage } from "@/lib/types";
 import { useExperience } from "@/lib/useExperience";
 import { Starfield } from "./Starfield";
+import { Meteors } from "./Meteors";
+import { StardustTrail } from "./StardustTrail";
 import { SoundToggle } from "./SoundToggle";
 import { StageAwaken } from "./stages/StageAwaken";
 import { StageLetter } from "./stages/StageLetter";
 import { Sky } from "./sky/Sky";
+import { CatchStarsGame } from "./bonus/CatchStarsGame";
 
 /** Cele trei „priveliști” de nivel înalt (Sky înglobează etapele 2–5). */
 type View = "awaken" | "sky" | "letter";
@@ -49,6 +52,7 @@ const FLASH_MS = 750;
 export function Experience() {
   const [state, dispatch] = useExperience();
   const [flash, setFlash] = useState(false);
+  const [bonusOpen, setBonusOpen] = useState(false);
   const view = viewFor(state.stage);
   const onSky = view === "sky";
 
@@ -73,6 +77,8 @@ export function Experience() {
             }}
           />
           <Starfield />
+          <Meteors />
+          <StardustTrail />
           <SoundToggle />
         </>
       )}
@@ -102,9 +108,17 @@ export function Experience() {
 
         {view === "letter" && (
           <motion.div key="letter" {...fade} className="absolute inset-0 overflow-y-auto">
-            <StageLetter onRestart={() => dispatch({ type: "RESET" })} />
+            <StageLetter
+              onRestart={() => dispatch({ type: "RESET" })}
+              onOpenBonus={() => setBonusOpen(true)}
+            />
           </motion.div>
         )}
+      </AnimatePresence>
+
+      {/* Joc bonus, deschis din scrisoare. */}
+      <AnimatePresence>
+        {bonusOpen && <CatchStarsGame onClose={() => setBonusOpen(false)} />}
       </AnimatePresence>
 
       {/* Scânteia care marchează trecerea din poem spre harta stelelor. */}

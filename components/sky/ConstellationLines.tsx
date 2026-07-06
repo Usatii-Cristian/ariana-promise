@@ -50,6 +50,22 @@ export function ConstellationLines({
           transition={{ duration: 0.55, ease: "easeInOut" }}
         />
       ))}
+      {/* O mică cometă zboară o singură dată de-a lungul fiecărei linii noi. */}
+      {segments.map((s) => (
+        <motion.circle
+          key={`comet-${s.key}`}
+          r={2.6}
+          fill="var(--color-gold-400)"
+          style={{ filter: "drop-shadow(0 0 4px var(--color-gold-500))" }}
+          initial={{ cx: s.from.x, cy: s.from.y, opacity: 0 }}
+          animate={{
+            cx: [s.from.x, s.to.x],
+            cy: [s.from.y, s.to.y],
+            opacity: [0, 1, 1, 0],
+          }}
+          transition={{ duration: 0.55, ease: "easeInOut", times: [0, 0.15, 0.85, 1] }}
+        />
+      ))}
     </motion.svg>
   );
 }
