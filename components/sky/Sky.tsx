@@ -1,11 +1,16 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValue,
+  animate as animateValue,
+} from "framer-motion";
 import { useEffect, useState } from "react";
 import { content } from "@/lib/content";
 import { Stage } from "@/lib/types";
 import { useMeasure } from "@/hooks/useMeasure";
-import { mapPositions, ringPositions } from "@/lib/geometry";
+import { mapPositions, ringCenter, ringPositions } from "@/lib/geometry";
 import { Star } from "./Star";
 import { ConstellationLines } from "./ConstellationLines";
 import { RingOutline } from "./RingOutline";
@@ -28,8 +33,18 @@ type SkyProps = {
 
 /** Milisecunde de pauză între sub-etapele automate. */
 const REORGANIZE_DELAY = 900;
-const LOCK_DELAY = 1000;
 const UNLOCK_GLOW = 750;
+
+/** Timpul (ms) în care stelele se adună pe conturul inelului. */
+const GATHER_MS = 600;
+/** Câte grade "recuperează" învârtirea înainte să se oprească exact în poziție. */
+const SPIN_START_DEG = 900;
+/** Durata (ms) învârtirii rapide care încetinește treptat până se oprește. */
+const SPIN_MS = 1500;
+/** Pauză (ms) după ce inelul s-a oprit, înainte să apară lacătul. */
+const SETTLE_PAUSE_MS = 500;
+/** Total: adunare → învârtire → pauză → lacăt. */
+const LOCK_DELAY = GATHER_MS + SPIN_MS + SETTLE_PAUSE_MS;
 
 /**
  * Scena persistentă (Etapele 2–5). Aceleași stele traversează etapele,
@@ -51,6 +66,8 @@ export function Sky({
 
   const [activeMoment, setActiveMoment] = useState<number | null>(null);
   const [unlocking, setUnlocking] = useState(false);
+  const [spinning, setSpinning] = useState(false);
+  const rotate = useMotionValue(0);
 
   const total = content.moments.length;
   const allTouched = touchOrder.length === total;
@@ -62,6 +79,7 @@ export function Sky({
       ? ringPositions(size)
       : mapPositions(size)
     : [];
+  const center = measured ? ringCenter(size) : { x: 0, y: 0 };
 
   // Auto-avans: toate stelele atinse → reorganizează în inel.
   useEffect(() => {
@@ -78,6 +96,29 @@ export function Sky({
       return () => clearTimeout(t);
     }
   }, [stage, onOpenLock]);
+
+  // Stelele se adună întâi pe contur (tween-ul din Star), apoi se învârt
+  // rapid în jurul centrului și încetinesc treptat până se opresc exact
+  // pe poziția finală — ca o roată care se oprește.
+  useEffect(() => {
+    if (stage !== Stage.Reorganize) {
+      rotate.set(0);
+      const reset = setTimeout(() => setSpinning(false), 0);
+      return () => clearTimeout(reset);
+    }
+    const t = setTimeout(() => setSpinning(true), GATHER_MS);
+    return () => clearTimeout(t);
+  }, [stage, rotate]);
+
+  useEffect(() => {
+    if (!spinning) return;
+    rotate.set(SPIN_START_DEG);
+    const controls = animateValue(rotate, 0, {
+      duration: SPIN_MS / 1000,
+      ease: [0.14, 0.8, 0.28, 1],
+    });
+    return () => controls.stop();
+  }, [spinning, rotate]);
 
   // Deblocare: scurt glow pe inel, apoi reveal.
   const handleUnlock = () => {
@@ -97,6 +138,10 @@ export function Sky({
         className="absolute inset-0"
         animate={{ opacity: stage === Stage.Reveal ? 0 : 1 }}
         transition={{ duration: 0.5 }}
+        style={{
+          rotate,
+          transformOrigin: `${center.x}px ${center.y}px`,
+        }}
       >
         {measured &&
           content.moments.map((m, i) => (
@@ -122,7 +167,7 @@ export function Sky({
         )}
       </AnimatePresence>
 
-      {/* Conturul inelului (reorganizare + lacăt). */}
+      {/* Conturul inelului — se conturează chiar când stelele se opresc din învârtit. */}
       <AnimatePresence>
         {measured &&
           (stage === Stage.Reorganize || stage === Stage.Lock) && (
@@ -132,7 +177,11 @@ export function Sky({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.4 }}
+              transition={
+                stage === Stage.Reorganize
+                  ? { duration: 0.5, delay: (GATHER_MS + SPIN_MS - 250) / 1000 }
+                  : { duration: 0.4 }
+              }
             >
               <RingOutline size={size} glow={unlocking} />
             </motion.div>
@@ -173,7 +222,7 @@ export function Sky({
         )}
       </AnimatePresence>
 
-      {/* Șoaptă în timpul reorganizării. */}
+      {/* Șoaptă — apare exact când învârtirea se oprește. */}
       <AnimatePresence>
         {stage === Stage.Reorganize && (
           <motion.p
@@ -181,7 +230,7 @@ export function Sky({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.5, delay: (GATHER_MS + SPIN_MS) / 1000 }}
             className="pointer-events-none absolute inset-x-0 bottom-16 text-center font-serif text-lg italic text-gold-400/90"
           >
             …erau, de fapt, un inel.

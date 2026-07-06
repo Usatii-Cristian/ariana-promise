@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
 import { Stage } from "@/lib/types";
 import { useExperience } from "@/lib/useExperience";
 import { Starfield } from "./Starfield";
@@ -25,11 +26,38 @@ const fade = {
   transition: { duration: 0.5 },
 };
 
+/** Tranziția din Etapa 1 (Luceafărul): se estompează spre exterior, ca și cum ai trece prin ea. */
+const awakenExit = {
+  initial: { opacity: 0, scale: 1.03 },
+  animate: { opacity: 1, scale: 1 },
+  exit: { opacity: 0, scale: 1.08 },
+  transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
+};
+
+/** Cerul intră ca și cum ai pluti spre stele. */
+const skyEnter = {
+  initial: { opacity: 0, scale: 0.94 },
+  animate: { opacity: 1, scale: 1 },
+  exit: { opacity: 0 },
+  transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
+};
+
+/** Milisecunde cât rămâne vizibil flash-ul auriu la trecerea spre cer. */
+const FLASH_MS = 750;
+
 /** Orchestratorul întregii experiențe „Constelația Noastră”. */
 export function Experience() {
   const [state, dispatch] = useExperience();
+  const [flash, setFlash] = useState(false);
   const view = viewFor(state.stage);
   const onSky = view === "sky";
+
+  // O scânteie aurie marchează trecerea din poem spre harta stelelor.
+  const openMap = () => {
+    setFlash(true);
+    dispatch({ type: "OPEN_MAP" });
+    setTimeout(() => setFlash(false), FLASH_MS);
+  };
 
   return (
     <main className="relative h-dvh w-full overflow-hidden">
@@ -51,13 +79,13 @@ export function Experience() {
 
       <AnimatePresence>
         {view === "awaken" && (
-          <motion.div key="awaken" {...fade} className="absolute inset-0">
-            <StageAwaken onOpen={() => dispatch({ type: "OPEN_MAP" })} />
+          <motion.div key="awaken" {...awakenExit} className="absolute inset-0">
+            <StageAwaken onOpen={openMap} />
           </motion.div>
         )}
 
         {onSky && (
-          <motion.div key="sky" {...fade} className="absolute inset-0">
+          <motion.div key="sky" {...skyEnter} className="absolute inset-0">
             <Sky
               stage={state.stage}
               touchOrder={state.touchOrder}
@@ -76,6 +104,25 @@ export function Experience() {
           <motion.div key="letter" {...fade} className="absolute inset-0 overflow-y-auto">
             <StageLetter onRestart={() => dispatch({ type: "RESET" })} />
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Scânteia care marchează trecerea din poem spre harta stelelor. */}
+      <AnimatePresence>
+        {flash && (
+          <motion.div
+            key="flash"
+            aria-hidden
+            className="pointer-events-none fixed inset-0 z-40"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0, 1, 0] }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: FLASH_MS / 1000, times: [0, 0.3, 1], ease: "easeOut" }}
+            style={{
+              background:
+                "radial-gradient(circle at 50% 50%, rgba(243,227,189,0.85) 0%, rgba(230,200,132,0.2) 40%, transparent 70%)",
+            }}
+          />
         )}
       </AnimatePresence>
     </main>

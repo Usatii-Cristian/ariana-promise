@@ -170,12 +170,11 @@ export const content: Content = {
   ],
 
   lock: {
-    // Întrebare legată de poveste — răspunsul se află chiar din versurile de la început.
-    question: "O singură vorbă: cum se numește steaua din povestea noastră?",
-    // Verificarea ignoră majusculele/spațiile; acceptăm și scrierea fără diacritice.
-    answers: ["luceafărul", "luceafarul", "luceafăr", "luceafar"],
+    question: "Cum îmi spui tu mie când nimeni nu aude?",
+    // Verificarea ignoră majusculele/spațiile; acceptăm și varianta fără diacritice.
+    answers: ["puta", "puța", "puță"],
     placeholder: "scrie aici…",
-    encouragement: "Mai încearcă — e chiar în versurile de la început.",
+    encouragement: "Mai încearcă, o știi tu.",
     skip: "Sari peste",
   },
 
