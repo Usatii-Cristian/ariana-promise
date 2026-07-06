@@ -2,7 +2,7 @@ import { useReducer } from "react";
 import { Stage } from "./types";
 
 /** Numărul de încercări greșite după care apare butonul "Sari peste". */
-export const MAX_ATTEMPTS_BEFORE_SKIP = 3;
+export const MAX_ATTEMPTS_BEFORE_SKIP = 6;
 
 export type ExperienceState = {
   stage: Stage;

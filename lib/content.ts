@@ -155,7 +155,6 @@ export const content: Content = {
   },
 
   // ── CELE 6 MOMENTE ────────────────────────────────────────────────
-  // Scrise pe tema Luceafărului. Schimbă datele/textele cu amintirile voastre reale.
   moments: [
     {
       x: 0.18,
@@ -167,55 +166,88 @@ export const content: Content = {
     {
       x: 0.72,
       y: 0.19,
-      date: "Prima privire",
-      title: "Te-am recunoscut",
-      text: "Nu știam nimic despre tine, dar ceva în mine te aștepta deja de mult.",
+      date: "Prima întâlnire",
+      title: "Ne era rușine să ne pupăm",
+      text: "Am ieșit afară, ne era rușine să ne sărutăm și am stat doar două ore — tu, în șortul roz de Pikmi Pop.",
     },
     {
       x: 0.32,
       y: 0.58,
-      date: "Prima noapte de vorbe",
-      title: "Până în zori",
-      text: "Am vorbit până s-au stins stelele și tot mi-a părut prea puțin.",
+      date: "1 februarie",
+      title: "Pe ascuns, cu flori și ciocolată",
+      text: "Prima dată la tine acasă, pe furiș, după o ceartă — am venit cu flori și ciocolată, ca să știi că nu renunț.",
     },
     {
       x: 0.84,
       y: 0.52,
-      date: "Primul „te iubesc”",
-      title: "Două cuvinte",
-      text: "Le-am spus cu jumătate de gură și cu toată inima deodată.",
+      date: "31 decembrie",
+      title: "Cadoul neașteptat",
+      text: "Ai ieșit total nepregătită, fără să te aștepți la nimic — și tocmai asta a făcut cadoul perfect.",
     },
     {
       x: 0.5,
       y: 0.36,
-      date: "Zilele grele",
-      title: "Am rămas",
-      text: "Au fost și nori pe cerul nostru. Te-am ales de fiecare dată, și-n furtună.",
+      date: "Zilele noastre de naștere",
+      title: "Sărbătorite împreună",
+      text: "Am petrecut zilele noastre de naștere unul lângă altul — cele mai bune cadouri nu se despachetează.",
     },
     {
       x: 0.6,
       y: 0.76,
-      date: "Azi",
-      title: "Aici, cu tine",
-      text: "Sub același cer, cu o poveste care abia și-a desenat conturul.",
+      date: "Când erai bolnavă",
+      title: "Ciocolată și bilețele",
+      text: "Când stăteai acasă bolnavă, îți lăsam mici surprize — ciocolată și bilețele, ca să știi că sunt cu tine chiar și de departe.",
     },
   ],
 
   lock: {
     // Adaugă oricâte întrebări vrei în acest array — se deblochează pe rând,
-    // în ordinea de mai jos. Exemplu pentru a doua întrebare (necomentează
-    // și completează cu răspunsul real când ești gata):
-    //
-    // {
-    //   question: "A doua întrebare a ta aici?",
-    //   answers: ["răspuns", "variantă fără diacritice"],
-    //   encouragement: "Mai încearcă, o știi tu.",
-    // },
+    // în ordinea de mai jos.
     questions: [
       {
         question: "Cum îmi spui tu mie când nimeni nu aude?",
         // Verificarea ignoră majusculele/spațiile; acceptăm și varianta fără diacritice.
         answers: ["puta", "puța", "puță"],
+        encouragement: "Mai încearcă, o știi tu.",
+      },
+      {
+        question: "Care e bomboana mea preferată?",
+        answers: ["toate"],
+        encouragement: "Mai încearcă, o știi tu.",
+      },
+      {
+        question: "Când ne-am pus împreună?",
+        answers: ["8 octombrie 2025", "8 octombrie", "8.10.2025", "08.10.2025"],
+        encouragement: "Mai încearcă, o știi tu.",
+      },
+      {
+        question: "Ce fac mereu când vrei să închizi apelul?",
+        answers: ["intind timpul", "întind timpul"],
+        encouragement: "Mai încearcă, o știi tu.",
+      },
+      {
+        question: "Care e fraza mea preferată înainte să închidem apelul?",
+        answers: ["te iubesc extrem de mult"],
+        encouragement: "Mai încearcă, o știi tu.",
+      },
+      {
+        question: "Câți pești am în acvariu?",
+        answers: ["nu stiu", "nu știu"],
+        encouragement: "Mai încearcă, o știi tu.",
+      },
+      {
+        question: "Care e peștele meu preferat?",
+        answers: ["al tau albastru", "al tău albastru", "albastru"],
+        encouragement: "Mai încearcă, o știi tu.",
+      },
+      {
+        question: "Care e mâncarea mea preferată?",
+        answers: ["toate"],
+        encouragement: "Mai încearcă, o știi tu.",
+      },
+      {
+        question: "Care e băutura mea preferată?",
+        answers: ["soc"],
         encouragement: "Mai încearcă, o știi tu.",
       },
     ],
@@ -236,14 +268,14 @@ export const content: Content = {
   },
 
   letter: {
-    greeting: "Draga mea Ariana,",
+    greeting: "Draga mea Ariana, 🤍",
     paragraphs: [
-      "Povestea a început ca-n Luceafărul: o fată prea frumoasă și o stea care o privea de departe. Diferența e că eu n-am vrut să rămân o stea rece pe cer.",
-      "Dacă ai ajuns până aici, înseamnă că ai unit toate punctele — exact cum ai făcut cu viața mea, fără să-ți dai seama.",
-      "Eminescu i-a dat luceafărului nemurirea, dar l-a lăsat singur. Eu aleg altfel: mai bine muritor, dar cu tine.",
-      "Tot ce a fost până acum a fost doar conturul. De aici încolo, desenăm restul.",
+      "Povestea a început ca-n Luceafărul 🌠: o fată prea frumoasă și o stea care o privea de departe. Diferența e că eu n-am vrut să rămân o stea rece pe cer — am vrut să cobor, să te ating, să te simt reală. 💫",
+      "Dacă ai ajuns până aici, înseamnă că ai unit toate punctele — exact cum ai făcut cu viața mea, fără să-ți dai seama. 🌌 Fiecare stea de pe cerul ăsta e un pic din inima mea, pusă acolo pentru tine.",
+      "Eminescu i-a dat luceafărului nemurirea, dar l-a lăsat singur, rece, departe. Eu aleg altfel: mai bine muritor, dar cu tine — cu mâna ta în mâna mea, cu inima ta lângă inima mea. ❤️‍🔥",
+      "Tot ce a fost până acum a fost doar conturul. De aici încolo, desenăm restul — împreună, cu tot ce avem, pentru totdeauna. 💍✨",
     ],
-    signature: "Al tău luceafăr, dar de data asta rămas lângă tine",
+    signature: "Al tău luceafăr, rămas lângă tine pentru totdeauna 🌙❤️",
     restart: "Revezi cerul",
   },
 
