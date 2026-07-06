@@ -4,9 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { Stage } from "@/lib/types";
 import { useExperience } from "@/lib/useExperience";
-import { Starfield } from "./Starfield";
-import { Meteors } from "./Meteors";
-import { StardustTrail } from "./StardustTrail";
+import { NightSky } from "./NightSky";
 import { SoundToggle } from "./SoundToggle";
 import { StageAwaken } from "./stages/StageAwaken";
 import { StageLetter } from "./stages/StageLetter";
@@ -76,9 +74,7 @@ export function Experience() {
                 "radial-gradient(120% 100% at 50% -10%, #121a44 0%, #070b1c 45%, #04060f 100%)",
             }}
           />
-          <Starfield />
-          <Meteors />
-          <StardustTrail />
+          <NightSky />
           <SoundToggle />
         </>
       )}
