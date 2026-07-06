@@ -260,7 +260,7 @@ export const content: Content = {
     startDate: { year: 2025, month: 10, day: 8 },
     counterLabel: "Împreună de",
     promise:
-      "Luceafărul a ales cerul și a rămas singur. Eu te aleg pe tine — și-ți promit că, oricâte stele vom mai număra, cobor din cer în fiecare noapte pentru tine.",
+      "Luceafărul a ales cerul și a rămas singur, rece, departe. 🌠 Eu te aleg pe tine — în fiecare zi, în fiecare noapte, în fiecare versiune de mine care va exista. 💫 Îți promit că, oricâte stele vom mai număra, eu tot spre tine cobor. 🌙❤️",
     physicalCue: {
       prompt: "Atinge inelul",
       message: "Acesta e doar semnul. Cel adevărat e chiar acum lângă tine.",
