@@ -26,8 +26,15 @@ export type Content = {
 
   /** ETAPA 1 — cerul se trezește. */
   awaken: {
-    /** Textul scris literă-cu-literă. */
-    intro: string;
+    /**
+     * Versurile de deschidere (Luceafărul), afișate vers-cu-vers pe cer.
+     * Un rând gol ("") = pauză între strofe.
+     */
+    poem: string[];
+    /** Atribuirea de sub poem. */
+    attribution: string;
+    /** Puntea personalizată către Ariana, scrisă literă-cu-literă. */
+    bridge: string;
     /** Butonul care deschide harta stelelor. */
     cta: string;
   };
@@ -93,8 +100,21 @@ export const content: Content = {
   herName: "Ariana",
 
   awaken: {
-    intro:
-      "Sub cerul ăsta sunt puncte care, unite, spun povestea noastră.",
+    // Deschiderea Luceafărului — o stea îndrăgostită de o „prea frumoasă fată".
+    poem: [
+      "A fost odată ca-n poveşti,",
+      "A fost ca niciodată,",
+      "Din rude mari împărăteşti,",
+      "O prea frumoasă fată.",
+      "",
+      "Şi era una la părinţi",
+      "Şi mândră-n toate cele,",
+      "Cum e Fecioara între sfinţi",
+      "Şi luna între stele.",
+    ],
+    attribution: "— Mihai Eminescu, „Luceafărul”",
+    bridge:
+      "Iar „prea frumoasa fată” are un nume: Ariana. Sub cerul ăsta sunt puncte care, unite, spun povestea noastră.",
     cta: "Privește cerul",
   },
 
@@ -161,17 +181,18 @@ export const content: Content = {
     startDate: { year: 2025, month: 10, day: 8 },
     counterLabel: "Împreună de",
     promise:
-      "Îți promit că, indiferent câte stele vom mai număra, pe tine te aleg în fiecare noapte.",
+      "Luceafărul a ales cerul și a rămas singur. Eu te aleg pe tine — și-ți promit că, oricâte stele vom mai număra, cobor din cer în fiecare noapte pentru tine.",
   },
 
   letter: {
     greeting: "Draga mea Ariana,",
     paragraphs: [
+      "Povestea a început ca-n Luceafărul: o fată prea frumoasă și o stea care o privea de departe. Diferența e că eu n-am vrut să rămân o stea rece pe cer.",
       "Dacă ai ajuns până aici, înseamnă că ai unit toate punctele — exact cum ai făcut cu viața mea, fără să-ți dai seama.",
-      "Nu-ți promit un cer fără nori. Îți promit că, sub orice cer, o să caut mereu mâna ta ca să-l privim împreună.",
+      "Eminescu i-a dat luceafărului nemurirea, dar l-a lăsat singur. Eu aleg altfel: mai bine muritor, dar cu tine.",
       "Tot ce a fost până acum a fost doar conturul. De aici încolo, desenăm restul.",
     ],
-    signature: "Al tău, mereu",
+    signature: "Al tău luceafăr, dar de data asta rămas lângă tine",
     restart: "Revezi cerul",
   },
 
