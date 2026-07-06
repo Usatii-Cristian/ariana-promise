@@ -123,56 +123,59 @@ export const content: Content = {
   },
 
   // ── CELE 6 MOMENTE ────────────────────────────────────────────────
+  // Scrise pe tema Luceafărului. Schimbă datele/textele cu amintirile voastre reale.
   moments: [
     {
       x: 0.18,
       y: 0.24,
-      date: "Prima dată",
-      title: "Când te-am văzut",
-      text: "Nu știam încă nimic, dar ceva în mine a recunoscut ceva în tine.",
+      date: "8 octombrie 2025",
+      title: "Ziua zero",
+      text: "Ziua în care povestea din Luceafăr a primit un nume: al tău.",
     },
     {
       x: 0.72,
       y: 0.19,
-      date: "Prima discuție",
-      title: "Până în zori",
-      text: "Am vorbit ore în șir și tot mi se părea că n-am apucat să-ți spun nimic.",
+      date: "Prima privire",
+      title: "Te-am recunoscut",
+      text: "Nu știam nimic despre tine, dar ceva în mine te aștepta deja de mult.",
     },
     {
       x: 0.32,
       y: 0.58,
-      date: "Primul da",
-      title: "Noi doi",
-      text: "Din ziua aia, „eu” a început să sune ciudat fără „tu” lângă el.",
+      date: "Prima noapte de vorbe",
+      title: "Până în zori",
+      text: "Am vorbit până s-au stins stelele și tot mi-a părut prea puțin.",
     },
     {
       x: 0.84,
       y: 0.52,
-      date: "Prima călătorie",
-      title: "Departe, împreună",
-      text: "Oriunde mergeam, tu erai partea de „acasă” pe care o luam cu mine.",
+      date: "Primul „te iubesc”",
+      title: "Două cuvinte",
+      text: "Le-am spus cu jumătate de gură și cu toată inima deodată.",
     },
     {
       x: 0.5,
       y: 0.36,
       date: "Zilele grele",
       title: "Am rămas",
-      text: "Am trecut și prin furtuni, și tot pe tine te-am ales, de fiecare dată.",
+      text: "Au fost și nori pe cerul nostru. Te-am ales de fiecare dată, și-n furtună.",
     },
     {
       x: 0.6,
       y: 0.76,
       date: "Azi",
-      title: "Aici, acum",
-      text: "Și uite-ne, sub același cer, cu o poveste care abia începe.",
+      title: "Aici, cu tine",
+      text: "Sub același cer, cu o poveste care abia și-a desenat conturul.",
     },
   ],
 
   lock: {
-    question: "Cum îmi spui tu mie când nimeni nu aude?",
-    answers: ["ursulețul meu"],
+    // Întrebare legată de poveste — răspunsul se află chiar din versurile de la început.
+    question: "O singură vorbă: cum se numește steaua din povestea noastră?",
+    // Verificarea ignoră majusculele/spațiile; acceptăm și scrierea fără diacritice.
+    answers: ["luceafărul", "luceafarul", "luceafăr", "luceafar"],
     placeholder: "scrie aici…",
-    encouragement: "Mai încearcă, o știi tu.",
+    encouragement: "Mai încearcă — e chiar în versurile de la început.",
     skip: "Sari peste",
   },
 
